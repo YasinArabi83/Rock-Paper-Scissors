@@ -16,19 +16,7 @@ class GameManager:
         
         return PlayerChoice
   
-    @staticmethod
-    def AddScore(player1:User,player2:User ,wins01:int,wins02:int):
-       
-        if wins01>wins02:
-            player1.score+=1
-            return ( "\n****************** "
-                     + f"{player1.name} wins this match!"
-                     +" ******************\n")
-        else:
-            player2.score+=1
-            return ( "\n******************"
-                     + f"{player2.name} wins this match!"
-                     +"******************\n")
+
     
     def PlayGame(self, player1, player2):
 
