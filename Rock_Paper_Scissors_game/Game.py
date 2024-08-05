@@ -1,6 +1,11 @@
-class Game:
-    def __init__(self, id, player1_id, player2_id,winner_id):
-        self.id = id
-        self.player1_id = player1_id
-        self.player2_id = player2_id
-        self.winner_id = winner_id
+from sqlalchemy import Column, Integer
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+class Game(Base):
+    __tablename__ = 'games'
+    id = Column(Integer, primary_key=True)
+    player1_id = Column(Integer)
+    player2_id = Column(Integer)
+    winner_id = Column(Integer)
