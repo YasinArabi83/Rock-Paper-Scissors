@@ -1,9 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from User import User, Base
-from Game import Game,Base
 from UserManager import UserManager
 from GameManager import GameManager
+from base import Base
 
 # Create a connection to the database
 engine = create_engine('sqlite:///game.db')
