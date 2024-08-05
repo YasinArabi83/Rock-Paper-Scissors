@@ -1,10 +1,14 @@
 from getpass import getpass
 from User import User
+from Game import Game
 
 class ManagerGame:
     
-    @staticmethod
-    def GetPlayerChoice(PlayerName:str):
+    def __init__(self, session):
+        self.session = session
+
+    
+    def GetPlayerChoice(self, PlayerName:str):
         PlayerChoice = getpass(f"{PlayerName}'s choice (Rock , Paper , Scissors) : ").lower()
        
         while PlayerChoice not in ["rock", "paper", "scissors"]:
@@ -26,38 +30,42 @@ class ManagerGame:
                      + f"{player2.name} wins this match!"
                      +"******************\n")
     
-    @staticmethod
-    def PlayGame(UsersList:list[User]):
-        
-        User.PrintUserList(UsersList)
-        Player1 = User.SelectUser(UsersList)
-        Player2 = User.SelectUser(UsersList)
-        
-        while Player1 == Player2:
-            print("Players must be different. Select second player again.")
-            Player2 = User.SelectUser(UsersList)
-    
+    def PlayGame(self, player1, player2):
+
         wins01 = int(0)
         wins02=int(0)
     
         while abs(wins01-wins02)!=3:
         
 
-                choice1 = ManagerGame.GetPlayerChoice(Player1.name)
-                choice2 = ManagerGame.GetPlayerChoice(Player2.name)
-                print(f"\n{Player1.name} : {choice1}"
-                      + f"\n{Player2.name} : {choice2}\n")       
-                if choice1 == choice2:
-                     print( "draw!")
-                elif (choice1 == "rock" and choice2 == "scissors") or \
-                    (choice1 == "paper" and choice2 == "rock") or \
-                    (choice1 == "scissors" and choice2 == "paper"):
-        
-                        wins01+=1
-                        print( f"\n{Player1.name} wins this game!\n")
-                else:
-                    wins02+=1
-                    print(f"\n{Player2.name} wins this game!\n")
+            choice1 = self.GetPlayerChoice(player1.name)
+            choice2 = self.GetPlayerChoice(player2.name)
 
-            
-        print(ManagerGame.AddScore(Player1,Player2,wins01,wins02))
+            print(f"\n{player1.name} : {choice1}"
+                    + f"\n{player2.name} : {choice2}\n")       
+            if choice1 == choice2:
+                    print( "draw!")
+            elif (choice1 == "rock" and choice2 == "scissors") or \
+                (choice1 == "paper" and choice2 == "rock") or \
+                (choice1 == "scissors" and choice2 == "paper"):
+                wins01+=1
+                
+            else:
+                wins02+=1
+                
+            print( f"\n{player1.name} : {wins01}  |  {player2.name} : {wins02}\n")
+
+        winner_id = player1.id if wins01 > wins02 else player2.id
+        new_game = Game(player1_id=player1.id, player2_id=player2.id, winner_id=winner_id)
+        self.session.add(new_game)
+        self.session.commit()
+        print(f"Game played between {player1.name} and {player2.name}. Winner: {player1.name if wins01 > wins02 else player2.name}")
+         
+        # Update wins and games played 
+        player1.games_played += 1
+        player2.games_played += 1
+        if winner_id == player1.id:
+            player1.wins += 1
+        else:
+            player2.wins += 1
+        self.session.commit()
