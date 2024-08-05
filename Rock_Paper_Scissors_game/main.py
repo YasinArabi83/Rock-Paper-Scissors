@@ -29,15 +29,25 @@ while True:
     
     if choice == '1':
         UserName = input("Enter a Username: ")
-        User.createUser(Users, UserName)
+        user_manager.CreateUser(UserName)
     elif choice == '2':
-        if len(Users) < 2:
+        users = user_manager.GetUsers()
+        if len(users) < 2:
             print("\nThere are not enough users to play the game. Create a new user.\n")
         else:
-            ManagerGame.PlayGame(Users)
+           player1= user_manager.PlayerSelector(users)
+           player2= user_manager.PlayerSelector(users)
+           assert player1 != player2, 'similar player are not allowed!'
+           game_manager.PlayGame(player1, player2)
     elif choice == '3':
-        User.PrintUserList(Users)
+        users = user_manager.GetUsers()
+        for user in users:
+            print(f"ID: {user.id}, Name: {user.name},  Wins: {user.wins}, Games Played: {user.games_played}")
     elif choice == '4':
+        games = game_manager.get_games()
+        for game in games:
+            print(f"Game ID: {game['game_id']}, Player 1: {game['player1_name']}, Player 2: {game['player2_name']}, Winner: {game['winner_name']}")
+    elif choice == '5':
         break
     else:
         print("Invalid selection. Please select again.\n")
