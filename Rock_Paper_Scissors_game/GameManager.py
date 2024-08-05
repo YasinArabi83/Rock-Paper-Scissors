@@ -2,7 +2,7 @@ from getpass import getpass
 from User import User
 from Game import Game
 
-class ManagerGame:
+class GameManager:
     
     def __init__(self, session):
         self.session = session
