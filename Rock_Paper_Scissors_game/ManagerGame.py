@@ -69,3 +69,19 @@ class ManagerGame:
         else:
             player2.wins += 1
         self.session.commit()
+    
+    def get_games(self):
+        games = self.session.query(Game).all()
+
+        game_details = []
+        for game in games:
+            player1 = self.session.query(User).filter_by(id=game.player1_id).first()
+            player2 = self.session.query(User).filter_by(id=game.player2_id).first()
+            winner = self.session.query(User).filter_by(id=game.winner_id).first()
+            game_details.append({
+                'game_id': game.id,
+                'player1_name': player1.name if player1 else 'Unknown',
+                'player2_name': player2.name if player2 else 'Unknown',
+                'winner_name': winner.name 
+            })
+        return game_details
