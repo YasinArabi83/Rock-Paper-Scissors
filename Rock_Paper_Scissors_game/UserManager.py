@@ -2,12 +2,15 @@ from User import User
 
 class UserManager:
 
-    @staticmethod
-    def createUser(UserList: list, name: str):
-        Id = len(UserList)
-        newUser = User(Id, name)
-        UserList.append(newUser)
+    def __init__(self , session):
+        self.session=session
 
+    def CreateUser(self, username):
+        new_user = User(name=username)
+        self.session.add(new_user)
+        self.session.commit()
+        print(f"User created: {username}")
+        
     @staticmethod
     def SelectUser(UserList: list):
         while True:
