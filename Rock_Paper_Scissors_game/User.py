@@ -1,14 +1,11 @@
-class User:
-    def __init__(self, Id: int, name: str, score=0):
-        self.Id = Id
-        self.name = name
-        self.score = score
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
 
-    def __str__(self):
-        return f"{self.Id} - {self.name} : {self.score}"
+Base = declarative_base()
 
-    def __eq__(self, __value: object) -> bool:
-       if self.Id == __value.Id:
-           return True
-       else:
-           return False
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    wins = Column(Integer, default=0)
+    games_played = Column(Integer, default=0)
