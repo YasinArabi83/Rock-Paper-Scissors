@@ -25,7 +25,6 @@ class UserManager:
             else:
                 print(f"Invalid Input , Please enter a number between 1 and  + {len(users)}")
 
-    @staticmethod
-    def PrintUserList(UserList: list):
-        for user in UserList:
-            print(user)
+    def GetUsers(self):
+        users = self.session.query(User).all()
+        return users
