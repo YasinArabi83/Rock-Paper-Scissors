@@ -1,5 +1,5 @@
 import getpass
-from Game import Game
+from Rock_Paper_Scissors_game.ManagerGame import ManagerGame
 from User import User
 
 Users: list[User] = []
@@ -21,7 +21,7 @@ while True:
         if len(Users) < 2:
             print("\nThere are not enough users to play the game. Create a new user.\n")
         else:
-            Game.PlayGame(Users)
+            ManagerGame.PlayGame(Users)
     elif choice == '3':
         User.PrintUserList(Users)
     elif choice == '4':

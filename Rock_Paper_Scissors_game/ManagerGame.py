@@ -1,7 +1,7 @@
 from getpass import getpass
 from User import User
 
-class Game:
+class ManagerGame:
     
     @staticmethod
     def GetPlayerChoice(PlayerName:str):
@@ -43,8 +43,8 @@ class Game:
         while abs(wins01-wins02)!=3:
         
 
-                choice1 = Game.GetPlayerChoice(Player1.name)
-                choice2 = Game.GetPlayerChoice(Player2.name)
+                choice1 = ManagerGame.GetPlayerChoice(Player1.name)
+                choice2 = ManagerGame.GetPlayerChoice(Player2.name)
                 print(f"\n{Player1.name} : {choice1}"
                       + f"\n{Player2.name} : {choice2}\n")       
                 if choice1 == choice2:
@@ -60,4 +60,4 @@ class Game:
                     print(f"\n{Player2.name} wins this game!\n")
 
             
-        print(Game.AddScore(Player1,Player2,wins01,wins02))
+        print(ManagerGame.AddScore(Player1,Player2,wins01,wins02))
