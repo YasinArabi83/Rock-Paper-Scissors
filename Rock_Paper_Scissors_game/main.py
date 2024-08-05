@@ -35,8 +35,13 @@ while True:
             print("\nThere are not enough users to play the game. Create a new user.\n")
         else:
            player1= user_manager.PlayerSelector(users)
-           player2= user_manager.PlayerSelector(users)
-           assert player1 != player2, 'similar player are not allowed!'
+           while True:
+              try:
+                   player2= user_manager.PlayerSelector(users)
+                   assert player1 != player2, 'similar player are not allowed!'
+                   break
+              except AssertionError as err:
+                   print(err)
            game_manager.PlayGame(player1, player2)
     elif choice == '3':
         users = user_manager.GetUsers()
